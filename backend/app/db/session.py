@@ -1,11 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from dotenv import load_dotenv
+import os
 
-DATABASE_URL = (
-    "postgresql+psycopg://"
-    "enrique:2540712"
-    "@localhost:5433/expense_manager"
-)
+
+load_dotenv() #Carga las variables de .env
+
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+
+if not DATABASE_URL:
+    raise RuntimeError('BD npt found ')
 
 engine = create_engine(DATABASE_URL)
 
