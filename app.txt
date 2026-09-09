@@ -1,0 +1,74 @@
+VARIABLES DE ENTORNO 
+DATABASE_URL = postgresql+psycopg://enrique:***@localhost:5433/expense_manager
+
+
+ALEMBIC
+python -m pip install alembic
+alembic init ./backend/alembic
+
+alembic configura las migraciones.
+versions aquí quedan las migraciones.
+env.py conecta Alembic con nuestra configuración/modelos.
+script.py.mako plantilla para generar migraciones.
+
+alembic.ini: la conexión ya está en .env y 
+queremos que Alembic la obtenga desde ahí, en lugar de duplicar credenciales.
+sqlalchemy.url =
+
+env.py: A
+target_metadata = Base.metadata
+from app.db.session import Base
+from app.models.transaction import Transaction 
+
+migraciones
+PYTHONPATH=backend alembic revision --autogenerate -m "create transactions table"
+PYTHONPATH=backend alembic revision --autogenerate -m "add created_at to transactions"
+cat backend/alembic/versions/687e21151f18_create_transactions_table.py
+
+marcar esta migración como aplicada
+    * PYTHONPATH=backend alembic stamp head
+
+    * PYTHONPATH=backend alembic current
+
+    * PYTHONPATH=backend alembic history
+
+
+
+
+
+docker exec expense-manager-db pg_isready -U enrique -d expense_manager
+
+
+
+routers:
+
+**router/transaction**
+from fastapi import APIRouter
+APIRouter permite agrupar endpoints relacionados.
+
+router = APIRouter(
+    prefix="/transactions",
+    tags=["Transactions"],
+)
+
+
+*main.py* conexión:
+from app.routers.transactions import router as transactions_router
+app.include_router(transactions_router)
+
+
+
+
+
+
+main.py: configura la aplicación
+
+routers: recibe las peticiones HTTP
+
+schemas: valida los datos
+
+models: representa las tablas
+
+db: gestiona la conexión
+
+PostgreSQL: guarda los datos

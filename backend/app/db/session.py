@@ -19,7 +19,7 @@ engine = create_engine(DATABASE_URL)
 SessionLocal no es una Session.
 Es una fábrica de Sessions.
 '''
-session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 
 class Base(DeclarativeBase):
